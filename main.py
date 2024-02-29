@@ -49,6 +49,7 @@ def alumnos():
   
   return render_template("alumnos.html", form = alumno_clase,nom=nom,apa=apa,ama=ama, email=email, edad=edad)
 
+# Crear Alumnos e insertar en BD
 @app.route("/index", methods=['GET', 'POST'])
 def index():
   create_form = forms.UserForm2(request.form)
@@ -62,7 +63,15 @@ def index():
     db.session.add(alum)
     db.session.commit()
   return render_template("index.html", form=create_form)
+
+# Mostrar Alumnos
+@app.route("/ABC_Completo", methods=['GET', 'POST'])
+def ABCompleto():
+  alum_form = forms.UserForm2(request.form)
+  alumno = Alumnos.query.all()
   
+  return render_template("ABC_Completo.html", alumno=alumno)
+
 if __name__ =="__main__":
   csrf.init_app(app)
   db.init_app(app)
